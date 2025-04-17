@@ -35,6 +35,18 @@ class NumericEntryApp:
         self.refresh_button_label.pack(side=tk.RIGHT)
         self.refresh_button_label.bind("<Button-1>", self.refresh_rates)
         
+        scale = tk.Scale(self.button_bar,
+                 from_=30,
+                 to=100,
+                 orient=tk.HORIZONTAL,
+                 length=150,
+                 showvalue=False,
+                 resolution=1,
+                 command=self.slider_changed)
+        scale.pack(side=tk.RIGHT)
+        scale.set(70)
+        self.root.attributes("-alpha", 0.7)
+
         # 创建 Canvas 和 Frame
         self.canvas = tk.Canvas(self.root, takefocus=0)
         self.canvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
@@ -65,6 +77,9 @@ class NumericEntryApp:
         add_button = tk.Button(root, text="+", command=self.add_convert_component)
         add_button.pack(pady=10)
         self.root.geometry("")
+
+    def slider_changed(self, value):
+        self.root.attributes("-alpha", float(value)/100)
 
     def toggle_pin(self, event):
         self.stay_on_top = (not self.stay_on_top)
